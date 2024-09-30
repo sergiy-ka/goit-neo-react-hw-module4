@@ -1,6 +1,6 @@
 import css from "./App.module.css";
 import { useState, useEffect } from "react";
-import Modal from "react-modal";
+// import Modal from "react-modal";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import SearchBar from "../SearchBar/SearchBar";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
@@ -8,8 +8,6 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ImageModal from "../ImageModal/ImageModal";
 import { fetchImages } from "../../api/images-api";
-
-Modal.setAppElement("#root");
 
 const App = () => {
   const [images, setImages] = useState([]);
@@ -47,7 +45,9 @@ const App = () => {
   };
 
   const handleImageClick = (image) => {
-    setModalImage(image);
+    if (!modalImage) {
+      setModalImage(image);
+    }
   };
 
   const closeModal = () => {
@@ -56,13 +56,6 @@ const App = () => {
 
   return (
     <div className={css.container}>
-      {/* <SearchBar onSearch={handleSearch} /> */}
-      {/* <ImageGallery onImageClick={handleOpenModal} /> */}
-      {/* <LoadMoreBtn onClick={handleLoadMore} /> */}
-      {/* <Loader isLoading={loading} /> */}
-      {/* <ErrorMessage /> */}
-      {/* <ImageModal image={modalImage} onClose={handleCloseModal} /> */}
-      {/* <Toaster /> */}
       <SearchBar onSubmit={handleSearch} />
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} onImageClick={handleImageClick} />

@@ -1,6 +1,8 @@
 import css from "./ImageModal.module.css";
 import Modal from "react-modal";
 
+Modal.setAppElement("#root");
+
 const ImageModal = ({ image, onClose }) => {
   return (
     <Modal
@@ -24,11 +26,11 @@ const ImageModal = ({ image, onClose }) => {
             <strong>Author:</strong> {image.user.name}
           </p>
           <p>
-            <strong>Likes:</strong> {image.likes}
-          </p>
-          <p>
             <strong>Description:</strong>{" "}
             {image.description || "No description available"}
+          </p>
+          <p>
+            <strong>Likes:</strong> {image.likes}
           </p>
         </div>
       </div>
