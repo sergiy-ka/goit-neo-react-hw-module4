@@ -1,4 +1,3 @@
-// Unsplash Photo Search application
 import axios from "axios";
 
 axios.defaults.baseURL = "https://api.unsplash.com";

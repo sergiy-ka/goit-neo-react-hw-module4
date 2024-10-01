@@ -18,6 +18,7 @@ const SearchBar = ({ onSubmit }) => {
         duration: 2500,
         position: "top-right",
       });
+      setQuery("");
       return;
     }
 

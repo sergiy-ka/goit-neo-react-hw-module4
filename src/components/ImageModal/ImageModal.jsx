@@ -15,13 +15,14 @@ const ImageModal = ({ image, onClose }) => {
       ariaHideApp={false}
     >
       <div className={css.ImageModalContent}>
-        <img
-          src={image.urls.regular}
-          alt={image.alt_description}
-          className={css.ImageModalImage}
-          onClick={onClose}
-        />
-        <div className={css.ImageModalDetails}>
+        <div className={css.ImageModalImage}>
+          <img
+            src={image.urls.regular}
+            alt={image.alt_description}
+            onClick={onClose}
+          />
+        </div>
+        <div className={css.ImageModalDetails} onClick={onClose}>
           <p>
             <strong>Author:</strong> {image.user.name}
           </p>

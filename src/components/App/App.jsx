@@ -1,6 +1,5 @@
 import css from "./App.module.css";
 import { useState, useEffect } from "react";
-// import Modal from "react-modal";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import SearchBar from "../SearchBar/SearchBar";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
@@ -16,6 +15,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalImage, setModalImage] = useState(null);
+  const [totalImages, setTotalImages] = useState(0);
 
   useEffect(() => {
     if (!query) {
@@ -23,13 +23,15 @@ const App = () => {
     }
 
     const fetchData = async () => {
-      setLoading(true);
       setError(null);
+      setLoading(true);
       try {
         const data = await fetchImages(query, page);
         setImages((prevImages) => [...prevImages, ...data.results]);
+        setTotalImages(data.total);
       } catch {
-        setError("Error fetching images");
+        setError("Error fetching images!");
+        setImages([]);
       } finally {
         setLoading(false);
       }
@@ -39,6 +41,9 @@ const App = () => {
   }, [query, page]);
 
   const handleSearch = (newQuery) => {
+    if (query === newQuery) {
+      return;
+    }
     setQuery(newQuery);
     setPage(1);
     setImages([]);
@@ -60,7 +65,7 @@ const App = () => {
       {error && <ErrorMessage message={error} />}
       <ImageGallery images={images} onImageClick={handleImageClick} />
       {loading && <Loader />}
-      {images.length > 0 && !loading && (
+      {images.length > 0 && images.length < totalImages && !loading && (
         <LoadMoreBtn onClick={() => setPage((prev) => prev + 1)} />
       )}
       {modalImage && <ImageModal image={modalImage} onClose={closeModal} />}
